@@ -1,0 +1,17 @@
+package com.imooc.miaosha.domain;
+
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+
+import java.util.Date;
+
+@Data
+public class MiaoshaGoods {
+
+    @Id
+    private Long id;
+    private Long goodsId;
+    private Integer stockCount;
+    private Date startDate;
+    private Date endDate;
+}

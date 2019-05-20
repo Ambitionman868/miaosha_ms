@@ -1,0 +1,91 @@
+#thymeleaf
+
+spring:
+  resources:
+    add-mappings: true
+    cache:
+      period: 3600
+    chain:
+      cache: true
+      enabled: true
+      #gzipped: true
+      html-application-cache: true
+    static-locations: classpath:/static/
+  #thymeleaf:
+    #prefix: classpath:resources/templates
+    #suffix: .html
+    #cache: false
+    #servlet:
+    #  content-type: text/html
+    #enabled: true
+    #encoding: utf-8
+    #mode: HTML
+  #druid
+  datasource:
+    url: jdbc:mysql://localhost:3306/miaosha?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    dbcp2:
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+    tomcat:
+      max-active: 1000
+      initial-size: 100
+      max-wait: 60000
+      min-idle: 500
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: select 'x'
+
+  #redis
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 30000
+    password: 123456
+    lettuce:
+      pool:
+        max-active: 1000
+        max-idle: 500
+        min-idle: 0
+        max-wait: 500
+  #rabbitmq
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    listener:
+      simple:
+        concurrency: 10                     #消费者数量
+        max-concurrency: 10
+        prefetch: 1                         #消费者每次从队列获取的消息数量
+        auto-startup: true                  #消费者自动启动
+        default-requeue-rejected: true      #消费失败，自动重新入队
+    template:
+      retry:                                #启用发送重试
+        enabled: true
+        initial-interval: 1000
+        max-attempts: 3
+        max-interval: 10000
+        multiplier: 1.0
+
+
+#mybatis
+mybatis:
+  type-aliases-package: com.imooc.miaosha.domain
+  configuration:
+    map-underscore-to-camel-case: true
+    default-fetch-size: 100
+    default-statement-timeout: 3000
+  mapper-locations: classpath:com/imooc/miaosha/dao/*.xml
+
+
+
